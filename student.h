@@ -28,8 +28,8 @@ public:
         string email; 
 
     public:
-        Student() : id(nextId++) {}
+        Student(): id(nextId++) {}
         Student(const string& newName, int newAge, const string& newMajor, const string& newEmail) 
             : id(nextId++), name(newName), age(newAge), major(newMajor), email(newEmail) {}
-
+    
 };
