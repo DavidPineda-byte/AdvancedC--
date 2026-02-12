@@ -1,7 +1,7 @@
 #include "studentManager.h"
-#include "student.h"
 #include <iostream>
 #include <algorithm> 
+#include<format> 
 
 int Student::nextId = 0;  
 
@@ -9,11 +9,6 @@ void studentManager::add(Student newStudent) {
     std::cout << "Adding a student record..." << std::endl;
     // Implementation for adding a student record
     students.push_back(newStudent);
-}
-
-void studentManager::display(){
-
-
 }
 
 Student studentManager::search(int id) {
@@ -30,14 +25,34 @@ Student studentManager::search(int id) {
     throw std::runtime_error("Student not found");
 }
 
-vector<Student> studentManager::searchByName(string name){
+std::vector<Student> studentManager::searchByName(std::string name){
 
-vector<Student> foundStudents;
+    std::vector<Student> foundStudents;
 
-for(Student student: students){
-    if(student.getName() == name){
-        foundStudents.push_back(student);
+    for(const Student& student : students){
+        if(student.getName() == name){
+            foundStudents.push_back(student);
+        }
+    }
+
+    return foundStudents;
+}
+
+void studentManager::display(){
+
+    std::cout << "Student Records:\n";
+
+    std::cout << std::format("{:>10} | {:>3} | {:>20} | {:>30}\n",
+                             "Name", "Age", "Major", "Email");
+
+    std::cout << std::string(70, '-') << '\n';
+
+    for(const Student& student : students){
+        std::cout << std::format("{:>10} | {:>3} | {:>20} | {:>30}\n",
+                                 student.getName(),
+                                 student.getAge(),
+                                 student.getMajor(),
+                                 student.getEmail());
     }
 }
-return foundStudents; 
-}
+
