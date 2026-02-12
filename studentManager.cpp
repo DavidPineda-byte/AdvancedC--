@@ -2,13 +2,22 @@
 #include <iostream>
 #include <algorithm> 
 #include<format> 
+#include <stdexcept>
 
 int Student::nextId = 0;  
+std::map<std::string, int> studentManager::majors;
 
 void studentManager::add(Student newStudent) {
     std::cout << "Adding a student record..." << std::endl;
     // Implementation for adding a student record
     students.push_back(newStudent);
+    string majorString = newStudent.getMajor();
+    if(majors.find(majorString) != majors.end()){
+        majors[majorString]++; // Increment count for existing major
+    } else{
+        println("Major not found in the map");
+        throw std::out_of_range("Student not found");
+    }
 }
 
 Student studentManager::search(int id) {
@@ -56,3 +65,11 @@ void studentManager::display(){
     }
 }
 
+void studentManager::studentsByMajor() {
+    for (const auto& major : majors) {
+        std::cout << major.first
+                  << ": "
+                  << major.second
+                  << " students\n";
+    }
+}
